@@ -1,7 +1,7 @@
 {
-  "name": "npm-package-template",
+  "name": "tried",
   "version": "0.0.0",
-  "description": "An npm package template.",
+  "description": "Trie generator.",
   "author": "Mark <mark@remarkablemark.org>",
   "main": "index.js",
   "scripts": {
@@ -16,13 +16,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/remarkablemark/npm-package-template"
+    "url": "https://github.com/remarkablemark/tried"
   },
   "bugs": {
-    "url": "https://github.com/remarkablemark/npm-package-template/issues"
+    "url": "https://github.com/remarkablemark/tried/issues"
   },
   "keywords": [
-    "npm-package-template"
+    "tried",
+    "trie",
+    "data structure",
+    "digital tree",
+    "radix tree",
+    "prefix tree",
+    "search tree"
   ],
   "dependencies": {},
   "devDependencies": {

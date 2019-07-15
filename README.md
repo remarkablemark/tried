@@ -1,65 +1,16 @@
-# npm-package-template
+# tried
 
-[![NPM](https://nodei.co/npm/npm-package-template.png)](https://nodei.co/npm/npm-package-template/)
+[![NPM](https://nodei.co/npm/tried.png)](https://nodei.co/npm/tried/)
 
-[![NPM version](https://img.shields.io/npm/v/npm-package-template.svg)](https://www.npmjs.com/package/npm-package-template)
-[![Build Status](https://travis-ci.org/remarkablemark/npm-package-template.svg?branch=master)](https://travis-ci.org/remarkablemark/npm-package-template)
-[![Coverage Status](https://coveralls.io/repos/github/remarkablemark/npm-package-template/badge.svg?branch=master)](https://coveralls.io/github/remarkablemark/npm-package-template?branch=master)
-[![Dependency status](https://david-dm.org/remarkablemark/npm-package-template.svg)](https://david-dm.org/remarkablemark/npm-package-template)
+[![NPM version](https://img.shields.io/npm/v/tried.svg)](https://www.npmjs.com/package/tried)
+[![Build Status](https://travis-ci.org/remarkablemark/tried.svg?branch=master)](https://travis-ci.org/remarkablemark/tried)
+[![Coverage Status](https://coveralls.io/repos/github/remarkablemark/tried/badge.svg?branch=master)](https://coveralls.io/github/remarkablemark/tried?branch=master)
 
-An npm package template.
+[Trie](https://wikipedia.org/wiki/Trie) generator.
 
 ## Installation
 
-Clone repository with Git:
-
-```sh
-$ git clone https://github.com/remarkablemark/npm-package-template.git
-$ cd npm-package-template
-```
-
-Or download repository with ZIP:
-
-```sh
-$ curl -LO https://github.com/remarkablemark/npm-package-template/archive/master.zip
-$ unzip master.zip
-$ rm master.zip
-$ cd npm-package-template
-```
-
 ## Usage
-
-Install package dependencies:
-
-```sh
-$ npm install
-```
-
-Reinitialize Git repository:
-
-```sh
-$ rm -rf .git
-$ git init
-```
-
-Make first commit:
-
-```sh
-$ git add .
-$ git commit -m "feat: clone project from npm-package-template"
-```
-
-Update package name to `my-package-name`:
-
-```sh
-$ git grep -l 'npm-package-template' | xargs sed -i '' -e 's/npm-package-template/my-package-name/g'
-```
-
-Manually update the files:
-
-- [ ] LICENSE
-- [ ] README.md
-- [ ] package.json
 
 ## Testing
 
@@ -109,12 +60,6 @@ $ npm run release
 $ git push --follow-tags && npm publish
 ```
 
-To see what files are going to be published, run the command:
-
-```sh
-$ tar tvf $(npm pack)
-```
-
 ## License
 
-[MIT](https://github.com/remarkablemark/npm-package-template/blob/master/LICENSE)
+[MIT](https://github.com/remarkablemark/tried/blob/master/LICENSE)
