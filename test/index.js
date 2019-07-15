@@ -1,8 +1,12 @@
 const assert = require('assert');
-const main = require('..');
+const tried = require('..');
 
 describe('tried', () => {
-  it('returns with placeholder', () => {
-    assert.equal(main(), 'tried');
+  [undefined, []].forEach(arg => {
+    describe(`when arguments=[${JSON.stringify(arg)}]`, () => {
+      it('returns {}', () => {
+        assert.deepEqual(tried(arg), {});
+      });
+    });
   });
 });
