@@ -2,11 +2,15 @@ const assert = require('assert');
 const tried = require('..');
 
 describe('tried', () => {
-  [undefined, []].forEach(arg => {
-    describe(`when arguments=[${JSON.stringify(arg)}]`, () => {
-      it('returns {}', () => {
-        assert.deepEqual(tried(arg), {});
-      });
+  [undefined, null, 0, 1, 'string'].forEach(arg => {
+    it(`returns {} when arguments=[${arg}]`, () => {
+      assert.deepEqual(tried(arg), {});
+    });
+  });
+
+  [{}, [], () => {}, new Date()].forEach(arg => {
+    it(`returns {} when arguments=[${arg.constructor.name}]`, () => {
+      assert.deepEqual(tried(arg), {});
     });
   });
 });

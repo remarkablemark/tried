@@ -5,14 +5,8 @@
  * @return {Object}
  */
 function tried(strings) {
-  if (strings === undefined) {
+  if (!Array.isArray(strings) || !strings.length) {
     return {};
-  }
-
-  if (strings instanceof Array) {
-    if (!strings.length) {
-      return {};
-    }
   }
 }
 
