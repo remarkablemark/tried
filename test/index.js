@@ -15,7 +15,10 @@ describe('tried', () => {
   });
 });
 
-[[['a'], { a: { $$: 1 } }]].forEach(testCase => {
+[
+  [['a'], { a: { $$: 1 } }],
+  [['a', 'ab'], { a: { $$: 1, b: { $$: 1 } } }]
+].forEach(testCase => {
   const [args, expected] = testCase;
 
   describe(`when arguments=[${JSON.stringify(args)}]`, () => {

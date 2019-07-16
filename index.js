@@ -32,9 +32,14 @@ function tried(strings) {
       j++
     ) {
       var letter = letters[j];
-      node = node[letter] = {};
 
-      // last node (level j)
+      // use node with key if it exists; otherwise, create empty node
+      node[letter] = node[letter] || {};
+
+      // update current node
+      node = node[letter];
+
+      // last node of current string (level j)
       if (lettersLastIndex === j) {
         node[END_OF_WORD_KEY] = END_OF_WORD_VALUE;
       }
