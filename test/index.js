@@ -14,3 +14,13 @@ describe('tried', () => {
     });
   });
 });
+
+[[['a'], { a: { $$: 1 } }]].forEach(testCase => {
+  const [args, expected] = testCase;
+
+  describe(`when arguments=[${JSON.stringify(args)}]`, () => {
+    it(`returns ${JSON.stringify(expected)}`, () => {
+      assert.deepEqual(tried(args), expected);
+    });
+  });
+});
