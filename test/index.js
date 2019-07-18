@@ -118,3 +118,21 @@ describe('data', () => {
     });
   });
 });
+
+describe('contains', () => {
+  [undefined, null, 0, 1].forEach(arg => {
+    describe(`when arguments=[${arg}]`, () => {
+      it('returns false', () => {
+        assert.strictEqual(tried().contains(arg), false);
+      });
+    });
+  });
+
+  [{}, [], () => {}, new Date()].forEach(arg => {
+    describe(`when arguments=[${arg.constructor}]`, () => {
+      it('returns false', () => {
+        assert.strictEqual(tried().contains(arg), false);
+      });
+    });
+  });
+});

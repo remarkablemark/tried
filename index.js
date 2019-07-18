@@ -48,6 +48,18 @@ function Trie(strings) {
 }
 
 /**
+ * Checks if trie contains string.
+ *
+ * @param {String} string
+ * @return {Boolean}
+ */
+Trie.prototype.contains = function(string) {
+  if (!string || typeof string !== 'string') {
+    return false;
+  }
+};
+
+/**
  * Creates a trie.
  *
  * @param {Array} [strings]
