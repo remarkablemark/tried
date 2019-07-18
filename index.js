@@ -8,16 +8,16 @@ var END_OF_WORD_KEY = '$$';
 var END_OF_WORD_VALUE = 1;
 
 /**
- * Generates a trie data structure.
+ * Represents a trie.
  *
- * @param  {Array}  [strings]
- * @return {Object}
+ * @constructor
+ * @param {Array} [strings]
  */
-function tried(strings) {
-  var root = {}; // initial node (level 0)
+function Trie(strings) {
+  var root = (this.data = {}); // initial node (level 0)
 
   if (!(strings instanceof Array) || !strings.length) {
-    return root;
+    return;
   }
 
   for (var i = 0, stringsLength = strings.length; i < stringsLength; i++) {
@@ -45,8 +45,16 @@ function tried(strings) {
       }
     }
   }
+}
 
-  return root;
+/**
+ * Creates a trie.
+ *
+ * @param {Array} [strings]
+ * @return {Object}
+ */
+function tried(strings) {
+  return new Trie(strings);
 }
 
 module.exports = tried;
