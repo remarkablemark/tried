@@ -75,6 +75,33 @@ Trie.prototype.contains = function(string) {
 };
 
 /**
+ * Gets value of string in trie.
+ *
+ * @param {String} string
+ * @return {*}
+ */
+Trie.prototype.get = function(string) {
+  if (!string || typeof string !== 'string') {
+    return;
+  }
+
+  var letters = string.split('');
+  var node = this.data;
+
+  for (var i = 0, len = letters.length, lastIndex = len - 1; i < len; i++) {
+    var key = letters[i];
+    if (!node.hasOwnProperty(key)) {
+      return;
+    }
+
+    node = node[key];
+    if (lastIndex === i && node.hasOwnProperty(END_OF_WORD_KEY)) {
+      return node[END_OF_WORD_KEY];
+    }
+  }
+};
+
+/**
  * Creates a trie.
  *
  * @param {Array} [strings]

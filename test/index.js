@@ -155,3 +155,40 @@ describe('contains', () => {
     });
   });
 });
+
+describe('get', () => {
+  [undefined, null, 0, 1].forEach(arg => {
+    describe(`when arguments=[${arg}]`, () => {
+      it('returns undefined', () => {
+        assert.strictEqual(tried().get(arg), undefined);
+      });
+    });
+  });
+
+  [{}, [], () => {}, new Date()].forEach(arg => {
+    describe(`when arguments=[${arg.constructor.name}]`, () => {
+      it('returns undefined', () => {
+        assert.strictEqual(tried().get(arg), undefined);
+      });
+    });
+  });
+
+  [
+    [['a'], 'a', VALUE],
+    [['b'], 'a', undefined],
+    [['abc'], 'abc', VALUE],
+    [['abc'], 'ab', undefined],
+    [['abc', 'ab'], 'ab', VALUE],
+    [['abc', 'ab'], 'abcd', undefined]
+  ].forEach(testCase => {
+    const [trieArgs, containsArgs, expected] = testCase;
+
+    describe(`when trie arguments=[${JSON.stringify(
+      trieArgs
+    )}] and contains arguments=[${JSON.stringify(containsArgs)}]`, () => {
+      it(`returns ${expected}`, () => {
+        assert.strictEqual(tried(trieArgs).get(containsArgs), expected);
+      });
+    });
+  });
+});
