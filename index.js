@@ -57,6 +57,21 @@ Trie.prototype.contains = function(string) {
   if (!string || typeof string !== 'string') {
     return false;
   }
+
+  var letters = string.split('');
+  var node = this.data;
+
+  for (var i = 0, len = letters.length, lastIndex = len - 1; i < len; i++) {
+    var key = letters[i];
+    if (!node.hasOwnProperty(key)) {
+      return false;
+    }
+
+    node = node[key];
+    if (lastIndex === i) {
+      return node.hasOwnProperty(END_OF_WORD_KEY);
+    }
+  }
 };
 
 /**

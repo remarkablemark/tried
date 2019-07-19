@@ -129,9 +129,28 @@ describe('contains', () => {
   });
 
   [{}, [], () => {}, new Date()].forEach(arg => {
-    describe(`when arguments=[${arg.constructor}]`, () => {
+    describe(`when arguments=[${arg.constructor.name}]`, () => {
       it('returns false', () => {
         assert.strictEqual(tried().contains(arg), false);
+      });
+    });
+  });
+
+  [
+    [['a'], 'a', true],
+    [['b'], 'a', false],
+    [['abc'], 'abc', true],
+    [['abc'], 'ab', false],
+    [['abc', 'ab'], 'ab', true],
+    [['abc', 'ab'], 'abcd', false]
+  ].forEach(testCase => {
+    const [trieArgs, containsArgs, expected] = testCase;
+
+    describe(`when trie arguments=[${JSON.stringify(
+      trieArgs
+    )}] and contains arguments=[${JSON.stringify(containsArgs)}]`, () => {
+      it(`returns ${expected}`, () => {
+        assert.strictEqual(tried(trieArgs).contains(containsArgs), expected);
       });
     });
   });
