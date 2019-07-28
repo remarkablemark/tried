@@ -45,6 +45,16 @@ Trie.prototype.contains = function(string) {
 };
 
 /**
+ * Adds strings to trie.
+ *
+ * @param {Array} string
+ * @return {*}
+ */
+Trie.prototype.add = function(strings) {
+  addToTrie(strings, this.data);
+};
+
+/**
  * Gets value of string in trie.
  *
  * @param {String} string
@@ -72,7 +82,7 @@ Trie.prototype.get = function(string) {
 };
 
 /**
- * Adds words to trie by object mutation.
+ * Adds strings to trie via object mutation.
  *
  * @param {Array} strings
  * @param {Object} trie

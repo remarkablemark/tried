@@ -192,3 +192,13 @@ describe('get', () => {
     });
   });
 });
+
+describe('add', () => {
+  describe('when arguments=[["abc"]]', () => {
+    it('adds "abc" to the trie', () => {
+      const trie = tried();
+      trie.add(['abc']);
+      assert.ok(trie.contains('abc'));
+    });
+  });
+});
