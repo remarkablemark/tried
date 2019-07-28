@@ -92,31 +92,43 @@ function addStringsToTrie(strings, trie) {
     return;
   }
 
-  var root = trie; // initial node (level 0)
-
   for (var i = 0, stringsLength = strings.length; i < stringsLength; i++) {
-    var letters = strings[i].split('');
-    var node = root;
+    addStringToTrie(strings[i], trie);
+  }
+}
 
-    for (
-      var j = 0,
-        lettersLength = letters.length,
-        lettersLastIndex = lettersLength - 1;
-      j < lettersLength;
-      j++
-    ) {
-      var letter = letters[j];
+/**
+ * Adds string to trie via object mutation.
+ *
+ * @param {String} string
+ * @param {Object} trie
+ */
+function addStringToTrie(string, trie) {
+  if (typeof string !== 'string') {
+    return;
+  }
 
-      // use node with key if it exists; otherwise, create empty node
-      node[letter] = node[letter] || {};
+  var node = trie;
+  var letters = string.split('');
 
-      // update current node
-      node = node[letter];
+  for (
+    var i = 0,
+      lettersLength = letters.length,
+      lettersLastIndex = lettersLength - 1;
+    i < lettersLength;
+    i++
+  ) {
+    var letter = letters[i];
 
-      // last node of current string (level j)
-      if (lettersLastIndex === j) {
-        node[END_OF_WORD_KEY] = END_OF_WORD_VALUE;
-      }
+    // use node with key if it exists; otherwise, create empty node
+    node[letter] = node[letter] || {};
+
+    // update current node
+    node = node[letter];
+
+    // last node of current string
+    if (lettersLastIndex === i) {
+      node[END_OF_WORD_KEY] = END_OF_WORD_VALUE;
     }
   }
 }
