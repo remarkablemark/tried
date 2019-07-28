@@ -14,7 +14,7 @@ var END_OF_WORD_VALUE = 1;
  * @param {Array} [strings]
  */
 function Trie(strings) {
-  addToTrie(strings, (this.data = {}));
+  addStringsToTrie(strings, (this.data = {}));
 }
 
 /**
@@ -51,7 +51,7 @@ Trie.prototype.contains = function(string) {
  * @return {*}
  */
 Trie.prototype.add = function(strings) {
-  addToTrie(strings, this.data);
+  addStringsToTrie(strings, this.data);
 };
 
 /**
@@ -87,7 +87,7 @@ Trie.prototype.get = function(string) {
  * @param {Array} strings
  * @param {Object} trie
  */
-function addToTrie(strings, trie) {
+function addStringsToTrie(strings, trie) {
   if (!(strings instanceof Array) || !strings.length) {
     return;
   }
