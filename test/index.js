@@ -5,7 +5,7 @@ const KEY = '$$'; // end of word key
 const VALUE = 1; // end of word value
 
 describe('data', () => {
-  [undefined, null, 0, 1, 'string'].forEach(arg => {
+  [undefined, null, 0, 1].forEach(arg => {
     describe(`when arguments=[${arg}]`, () => {
       it('returns {}', () => {
         assert.deepEqual(tried(arg).data, {});
@@ -27,12 +27,11 @@ describe('data', () => {
      *  |
      *  .
      */
-    [
-      ['a'],
-      {
-        a: { [KEY]: VALUE }
-      }
-    ],
+    ['a', { a: { [KEY]: VALUE } }],
+    [['a'], { a: { [KEY]: VALUE } }],
+    [['a', undefined], { a: { [KEY]: VALUE } }],
+    [['a', null], { a: { [KEY]: VALUE } }],
+    [['a', 1], { a: { [KEY]: VALUE } }],
 
     /**
      *    a

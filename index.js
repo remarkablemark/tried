@@ -11,16 +11,16 @@ var END_OF_WORD_VALUE = 1;
  * Represents a trie.
  *
  * @constructor
- * @param {Array} [strings]
+ * @param {Array|String} [strings]
  */
 function Trie(strings) {
   addStringsToTrie(strings, (this.data = {}));
 }
 
 /**
- * Checks if trie contains string.
+ * Checks if the trie contains a string.
  *
- * @param {String} string
+ * @param {String} [string]
  * @return {Boolean}
  */
 Trie.prototype.contains = function(string) {
@@ -45,9 +45,9 @@ Trie.prototype.contains = function(string) {
 };
 
 /**
- * Adds strings to trie.
+ * Adds string(s) to the trie.
  *
- * @param {Array} string
+ * @param {Array|String} [strings]
  * @return {*}
  */
 Trie.prototype.add = function(strings) {
@@ -82,18 +82,18 @@ Trie.prototype.get = function(string) {
 };
 
 /**
- * Adds strings to trie via object mutation.
+ * Adds string(s) to the trie.
  *
- * @param {Array} strings
+ * @param {Array|String} [strings]
  * @param {Object} trie
  */
 function addStringsToTrie(strings, trie) {
-  if (!(strings instanceof Array) || !strings.length) {
-    return;
-  }
-
-  for (var i = 0, stringsLength = strings.length; i < stringsLength; i++) {
-    addStringToTrie(strings[i], trie);
+  if (strings instanceof Array && strings.length) {
+    for (var i = 0, stringsLength = strings.length; i < stringsLength; i++) {
+      addStringToTrie(strings[i], trie);
+    }
+  } else {
+    addStringToTrie(strings, trie);
   }
 }
 
@@ -134,9 +134,9 @@ function addStringToTrie(string, trie) {
 }
 
 /**
- * Creates a trie.
+ * Instantiates a trie (with optional strings).
  *
- * @param {Array} [strings]
+ * @param {Array|String} [strings]
  * @return {Object}
  */
 function tried(strings) {
