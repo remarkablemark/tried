@@ -14,37 +14,7 @@ var END_OF_WORD_VALUE = 1;
  * @param {Array} [strings]
  */
 function Trie(strings) {
-  var root = (this.data = {}); // initial node (level 0)
-
-  if (!(strings instanceof Array) || !strings.length) {
-    return;
-  }
-
-  for (var i = 0, stringsLength = strings.length; i < stringsLength; i++) {
-    var letters = strings[i].split('');
-    var node = root;
-
-    for (
-      var j = 0,
-        lettersLength = letters.length,
-        lettersLastIndex = lettersLength - 1;
-      j < lettersLength;
-      j++
-    ) {
-      var letter = letters[j];
-
-      // use node with key if it exists; otherwise, create empty node
-      node[letter] = node[letter] || {};
-
-      // update current node
-      node = node[letter];
-
-      // last node of current string (level j)
-      if (lettersLastIndex === j) {
-        node[END_OF_WORD_KEY] = END_OF_WORD_VALUE;
-      }
-    }
-  }
+  addToTrie(strings, (this.data = {}));
 }
 
 /**
@@ -100,6 +70,46 @@ Trie.prototype.get = function(string) {
     }
   }
 };
+
+/**
+ * Adds words to trie by object mutation.
+ *
+ * @param {Array} strings
+ * @param {Object} trie
+ */
+function addToTrie(strings, trie) {
+  if (!(strings instanceof Array) || !strings.length) {
+    return;
+  }
+
+  var root = trie; // initial node (level 0)
+
+  for (var i = 0, stringsLength = strings.length; i < stringsLength; i++) {
+    var letters = strings[i].split('');
+    var node = root;
+
+    for (
+      var j = 0,
+        lettersLength = letters.length,
+        lettersLastIndex = lettersLength - 1;
+      j < lettersLength;
+      j++
+    ) {
+      var letter = letters[j];
+
+      // use node with key if it exists; otherwise, create empty node
+      node[letter] = node[letter] || {};
+
+      // update current node
+      node = node[letter];
+
+      // last node of current string (level j)
+      if (lettersLastIndex === j) {
+        node[END_OF_WORD_KEY] = END_OF_WORD_VALUE;
+      }
+    }
+  }
+}
 
 /**
  * Creates a trie.
