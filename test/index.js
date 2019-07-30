@@ -105,11 +105,15 @@ describe('get', () => {
 });
 
 describe('add', () => {
-  describe('when arguments=[["abc"]]', () => {
-    it('adds "abc" to the trie', () => {
-      const trie = tried();
-      trie.add(['abc']);
-      assert.ok(trie.contains('abc'));
+  data.forEach(testCase => {
+    const [args, expected] = testCase;
+
+    describe(`when arguments=[${JSON.stringify(args)}]`, () => {
+      it(`adds the string(s) to the trie`, () => {
+        const trie = tried();
+        trie.add(args);
+        assert.deepEqual(trie.data, expected);
+      });
     });
   });
 });
