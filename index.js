@@ -48,10 +48,11 @@ Trie.prototype.contains = function(string) {
  * Adds string(s) to the trie.
  *
  * @param {Array|String} [strings]
- * @return {*}
+ * @return {this}
  */
 Trie.prototype.add = function(strings) {
   addStringsToTrie(strings, this.data);
+  return this;
 };
 
 /**

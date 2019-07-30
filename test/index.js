@@ -109,11 +109,24 @@ describe('add', () => {
     const [args, expected] = testCase;
 
     describe(`when arguments=[${JSON.stringify(args)}]`, () => {
-      it(`adds the string(s) to the trie`, () => {
+      it('adds the string(s) to the trie', () => {
         const trie = tried();
         trie.add(args);
         assert.deepEqual(trie.data, expected);
       });
     });
+  });
+
+  it('is a chainable method that returns the trie instance', () => {
+    const [args, expected] = data[0];
+    const trie = tried();
+    assert.strictEqual(
+      trie
+        .add()
+        .add(args)
+        .add(args),
+      trie
+    );
+    assert.deepEqual(trie.data, expected);
   });
 });
