@@ -105,7 +105,7 @@ function addStringsToTrie(strings, trie) {
  * @param {Object} trie
  */
 function addStringToTrie(string, trie) {
-  if (typeof string !== 'string') {
+  if (!string || typeof string !== 'string') {
     return;
   }
 
@@ -132,6 +132,89 @@ function addStringToTrie(string, trie) {
       node[END_OF_WORD_KEY] = END_OF_WORD_VALUE;
     }
   }
+}
+
+/**
+ * Removes string from the trie.
+ *
+ * @param {String} [string]
+ * @return {this}
+ */
+Trie.prototype.remove = function(string) {
+  removeStringFromTrie(string, this.data);
+  return this;
+};
+
+/**
+ * Removes string from the trie.
+ *
+ * @param {String} string
+ * @param {Object} trie
+ */
+function removeStringFromTrie(string, trie) {
+  if (!string || typeof string !== 'string') {
+    return;
+  }
+
+  var letters = string.split('');
+  var node = trie;
+  var nodes = [node];
+
+  for (var i = 0, len = letters.length, lastIndex = len - 1; i < len; i++) {
+    var key = letters[i];
+    if (!node.hasOwnProperty(key)) {
+      return;
+    }
+
+    node = node[key];
+    if (lastIndex === i && node.hasOwnProperty(END_OF_WORD_KEY)) {
+      delete node[END_OF_WORD_KEY];
+
+      // clean up empty nodes like `{ a: {} }`
+      while (isObjectEmpty(node)) {
+        if (nodes.length) {
+          // parent node
+          node = nodes.pop();
+          // delete empty property
+          delete node[getObjectKey(node)];
+        } else {
+          break;
+        }
+      }
+    }
+
+    // keep track of traversed nodes
+    nodes.push(node);
+  }
+}
+
+/**
+ * Gets first object key.
+ *
+ * @param {Object} object
+ * @return {String|undefined}
+ */
+function getObjectKey(object) {
+  for (var key in object) {
+    if (object.hasOwnProperty(key)) {
+      return key;
+    }
+  }
+}
+
+/**
+ * Checks if object is empty.
+ *
+ * @param {Object} object
+ * @return {Boolean}
+ */
+function isObjectEmpty(object) {
+  for (var key in object) {
+    if (object.hasOwnProperty(key)) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /**

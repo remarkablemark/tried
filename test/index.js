@@ -130,3 +130,26 @@ describe('add', () => {
     assert.deepEqual(trie.data, expected);
   });
 });
+
+describe('remove', () => {
+  describe('when arguments=["a"]', () => {
+    it('removes the string from the trie', () => {
+      const trie = tried('a');
+      trie.remove('a');
+      assert.deepEqual(trie.data, {});
+    });
+  });
+
+  it('is a chainable method that returns the trie instance', () => {
+    const [args] = data[0];
+    const trie = tried();
+    assert.strictEqual(
+      trie
+        .remove()
+        .remove(args)
+        .remove(args),
+      trie
+    );
+    assert.deepEqual(trie.data, {});
+  });
+});
