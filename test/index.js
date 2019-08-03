@@ -1,6 +1,6 @@
 const assert = require('assert');
 const tried = require('..');
-const { data, VALUE } = require('./data');
+const { data, KEY, VALUE } = require('./data');
 
 describe('data', () => {
   [undefined, null, 0, 1].forEach(arg => {
@@ -143,22 +143,18 @@ describe('remove', () => {
   describe('when trie contains "a" and "ab"', () => {
     it('contains "ab" when "a" is removed', () => {
       const trie = tried(['a', 'ab']);
-      assert.deepEqual(trie.data, {
+      const expected = {
         a: {
-          $$: 1,
+          [KEY]: VALUE,
           b: {
-            $$: 1
+            [KEY]: VALUE
           }
         }
-      });
+      };
+      assert.deepEqual(trie.data, expected);
       trie.remove('a');
-      assert.deepEqual(trie.data, {
-        a: {
-          b: {
-            $$: 1
-          }
-        }
-      });
+      delete expected.a[KEY];
+      assert.deepEqual(trie.data, expected);
     });
   });
 
