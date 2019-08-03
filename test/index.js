@@ -140,6 +140,28 @@ describe('remove', () => {
     });
   });
 
+  describe('when trie contains "a" and "ab"', () => {
+    it('contains "ab" when "a" is removed', () => {
+      const trie = tried(['a', 'ab']);
+      assert.deepEqual(trie.data, {
+        a: {
+          $$: 1,
+          b: {
+            $$: 1
+          }
+        }
+      });
+      trie.remove('a');
+      assert.deepEqual(trie.data, {
+        a: {
+          b: {
+            $$: 1
+          }
+        }
+      });
+    });
+  });
+
   it('is a chainable method that returns the trie instance', () => {
     const [args] = data[0];
     const trie = tried();
