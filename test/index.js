@@ -1,14 +1,10 @@
 const assert = require('assert');
 const tried = require('..');
-const { data, KEY, VALUE } = require('./data');
+const { data, invalid, KEY, VALUE } = require('./data');
 
 describe('tried', () => {
   it('does not set data for invalid arguments', () => {
-    [undefined, null, 0, 1].forEach(arg => {
-      assert.deepEqual(tried(arg).data, {});
-    });
-
-    [{}, [], () => {}, new Date()].forEach(arg => {
+    invalid.forEach(arg => {
       assert.deepEqual(tried(arg).data, {});
     });
   });
@@ -24,11 +20,7 @@ describe('tried', () => {
 
 describe('contains', () => {
   it('returns false for invalid arguments', () => {
-    [undefined, null, 0, 1].forEach(arg => {
-      assert.strictEqual(tried().contains(arg), false);
-    });
-
-    [{}, [], () => {}, new Date()].forEach(arg => {
+    invalid.forEach(arg => {
       assert.strictEqual(tried().contains(arg), false);
     });
   });
@@ -53,11 +45,7 @@ describe('contains', () => {
 
 describe('get', () => {
   it('returns undefined for invalid arguments', () => {
-    [undefined, null, 0, 1].forEach(arg => {
-      assert.strictEqual(tried().get(arg), undefined);
-    });
-
-    [{}, [], () => {}, new Date()].forEach(arg => {
+    invalid.forEach(arg => {
       assert.strictEqual(tried().get(arg), undefined);
     });
   });

@@ -89,8 +89,11 @@ const data = [
   ]
 ];
 
+const invalid = [undefined, null, 0, 1, {}, [], () => {}, new Date()];
+
 module.exports = {
   data,
+  invalid,
   KEY,
   VALUE
 };
