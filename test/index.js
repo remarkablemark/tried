@@ -111,6 +111,12 @@ describe('remove', () => {
     assert.deepEqual(trie.data, {});
   });
 
+  it('does not remove if string not found', () => {
+    const trie = tried('a');
+    trie.remove('aa');
+    assert.ok(trie.contains('a'));
+  });
+
   describe('when trie contains "a" and "ab"', () => {
     it('contains only "ab" when "a" is removed', () => {
       const trie = tried(['a', 'ab']);
