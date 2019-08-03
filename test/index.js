@@ -2,48 +2,34 @@ const assert = require('assert');
 const tried = require('..');
 const { data, KEY, VALUE } = require('./data');
 
-describe('data', () => {
-  [undefined, null, 0, 1].forEach(arg => {
-    describe(`when arguments=[${arg}]`, () => {
-      it('returns {}', () => {
-        assert.deepEqual(tried(arg).data, {});
-      });
+describe('tried', () => {
+  it('does not set data for invalid arguments', () => {
+    [undefined, null, 0, 1].forEach(arg => {
+      assert.deepEqual(tried(arg).data, {});
     });
-  });
 
-  [{}, [], () => {}, new Date()].forEach(arg => {
-    describe(`when arguments=[${arg.constructor.name}]`, () => {
-      it('returns {}', () => {
-        assert.deepEqual(tried(arg).data, {});
-      });
+    [{}, [], () => {}, new Date()].forEach(arg => {
+      assert.deepEqual(tried(arg).data, {});
     });
   });
 
   data.forEach(testCase => {
     const [args, expected] = testCase;
 
-    describe(`when arguments=[${JSON.stringify(args)}]`, () => {
-      it(`sets data=${JSON.stringify(expected)}`, () => {
-        assert.deepEqual(tried(args).data, expected);
-      });
+    it(`sets data for ${JSON.stringify(args)}`, () => {
+      assert.deepEqual(tried(args).data, expected);
     });
   });
 });
 
 describe('contains', () => {
-  [undefined, null, 0, 1].forEach(arg => {
-    describe(`when arguments=[${arg}]`, () => {
-      it('returns false', () => {
-        assert.strictEqual(tried().contains(arg), false);
-      });
+  it('returns false for invalid arguments', () => {
+    [undefined, null, 0, 1].forEach(arg => {
+      assert.strictEqual(tried().contains(arg), false);
     });
-  });
 
-  [{}, [], () => {}, new Date()].forEach(arg => {
-    describe(`when arguments=[${arg.constructor.name}]`, () => {
-      it('returns false', () => {
-        assert.strictEqual(tried().contains(arg), false);
-      });
+    [{}, [], () => {}, new Date()].forEach(arg => {
+      assert.strictEqual(tried().contains(arg), false);
     });
   });
 
@@ -57,10 +43,8 @@ describe('contains', () => {
   ].forEach(testCase => {
     const [trieArgs, containsArgs, expected] = testCase;
 
-    describe(`when trie arguments=[${JSON.stringify(
-      trieArgs
-    )}] and contains arguments=[${JSON.stringify(containsArgs)}]`, () => {
-      it(`returns ${expected}`, () => {
+    describe(`when trie contains ${JSON.stringify(trieArgs)}`, () => {
+      it(`returns ${expected} for "${containsArgs}"`, () => {
         assert.strictEqual(tried(trieArgs).contains(containsArgs), expected);
       });
     });
@@ -68,19 +52,13 @@ describe('contains', () => {
 });
 
 describe('get', () => {
-  [undefined, null, 0, 1].forEach(arg => {
-    describe(`when arguments=[${arg}]`, () => {
-      it('returns undefined', () => {
-        assert.strictEqual(tried().get(arg), undefined);
-      });
+  it('returns undefined for invalid arguments', () => {
+    [undefined, null, 0, 1].forEach(arg => {
+      assert.strictEqual(tried().get(arg), undefined);
     });
-  });
 
-  [{}, [], () => {}, new Date()].forEach(arg => {
-    describe(`when arguments=[${arg.constructor.name}]`, () => {
-      it('returns undefined', () => {
-        assert.strictEqual(tried().get(arg), undefined);
-      });
+    [{}, [], () => {}, new Date()].forEach(arg => {
+      assert.strictEqual(tried().get(arg), undefined);
     });
   });
 
@@ -94,10 +72,8 @@ describe('get', () => {
   ].forEach(testCase => {
     const [trieArgs, containsArgs, expected] = testCase;
 
-    describe(`when trie arguments=[${JSON.stringify(
-      trieArgs
-    )}] and contains arguments=[${JSON.stringify(containsArgs)}]`, () => {
-      it(`returns ${expected}`, () => {
+    describe(`when trie contains ${JSON.stringify(trieArgs)}`, () => {
+      it(`returns ${expected} for "${containsArgs}"`, () => {
         assert.strictEqual(tried(trieArgs).get(containsArgs), expected);
       });
     });
@@ -105,43 +81,38 @@ describe('get', () => {
 });
 
 describe('add', () => {
+  // test chainable method
+  it('returns instance', () => {
+    const trie = tried();
+    assert.equal(trie.remove(), trie);
+  });
+
   data.forEach(testCase => {
     const [args, expected] = testCase;
 
-    describe(`when arguments=[${JSON.stringify(args)}]`, () => {
-      it('adds the string(s) to the trie', () => {
-        const trie = tried();
-        trie.add(args);
-        assert.deepEqual(trie.data, expected);
-      });
+    it(`adds ${JSON.stringify(args)} to trie`, () => {
+      const trie = tried();
+      trie.add(args);
+      assert.deepEqual(trie.data, expected);
     });
-  });
-
-  it('is a chainable method that returns the trie instance', () => {
-    const [args, expected] = data[0];
-    const trie = tried();
-    assert.strictEqual(
-      trie
-        .add()
-        .add(args)
-        .add(args),
-      trie
-    );
-    assert.deepEqual(trie.data, expected);
   });
 });
 
 describe('remove', () => {
-  describe('when arguments=["a"]', () => {
-    it('removes the string from the trie', () => {
-      const trie = tried('a');
-      trie.remove('a');
-      assert.deepEqual(trie.data, {});
-    });
+  // test chainable method
+  it('returns instance', () => {
+    const trie = tried();
+    assert.equal(trie.remove(), trie);
+  });
+
+  it('removes single string from trie', () => {
+    const trie = tried('a');
+    trie.remove('a');
+    assert.deepEqual(trie.data, {});
   });
 
   describe('when trie contains "a" and "ab"', () => {
-    it('contains "ab" when "a" is removed', () => {
+    it('contains only "ab" when "a" is removed', () => {
       const trie = tried(['a', 'ab']);
       const expected = {
         a: {
@@ -156,18 +127,5 @@ describe('remove', () => {
       delete expected.a[KEY];
       assert.deepEqual(trie.data, expected);
     });
-  });
-
-  it('is a chainable method that returns the trie instance', () => {
-    const [args] = data[0];
-    const trie = tried();
-    assert.strictEqual(
-      trie
-        .remove()
-        .remove(args)
-        .remove(args),
-      trie
-    );
-    assert.deepEqual(trie.data, {});
   });
 });
