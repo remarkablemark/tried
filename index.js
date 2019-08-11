@@ -135,15 +135,31 @@ function addStringToTrie(string, trie) {
 }
 
 /**
- * Removes string from the trie.
+ * Removes string(s) from the trie.
  *
- * @param {String} [string]
+ * @param {Array|String} [strings]
  * @return {this}
  */
-Trie.prototype.remove = function(string) {
-  removeStringFromTrie(string, this.data);
+Trie.prototype.remove = function(strings) {
+  removeStringsFromTrie(strings, this.data);
   return this;
 };
+
+/**
+ * Removes string(s) from the trie.
+ *
+ * @param {Array|String} [strings]
+ * @param {Object} trie
+ */
+function removeStringsFromTrie(strings, trie) {
+  if (strings instanceof Array && strings.length) {
+    for (var i = 0, stringsLength = strings.length; i < stringsLength; i++) {
+      removeStringFromTrie(strings[i], trie);
+    }
+  } else {
+    removeStringFromTrie(strings, trie);
+  }
+}
 
 /**
  * Removes string from the trie.

@@ -106,6 +106,15 @@ describe('remove', () => {
     assert.ok(!trie.contains('bar'));
   });
 
+  it('removes multiple strings from trie', () => {
+    const trie = tried(['foo', 'bar', 'baz', 'qux']);
+    trie.remove(['bar', 'qux']);
+    assert.ok(trie.contains('foo'));
+    assert.ok(!trie.contains('bar'));
+    assert.ok(trie.contains('baz'));
+    assert.ok(!trie.contains('qux'));
+  });
+
   it('does not remove if string not found', () => {
     const trie = tried('a');
     trie.remove('aa');
