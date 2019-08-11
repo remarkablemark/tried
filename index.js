@@ -176,7 +176,7 @@ function removeStringFromTrie(string, trie) {
           // parent node
           node = nodes.pop();
           // delete empty property
-          delete node[getObjectKey(node)];
+          delete node[letters[nodes.length]];
         } else {
           break;
         }
@@ -185,20 +185,6 @@ function removeStringFromTrie(string, trie) {
 
     // keep track of traversed nodes
     nodes.push(node);
-  }
-}
-
-/**
- * Gets first object key.
- *
- * @param {Object} object
- * @return {String|undefined}
- */
-function getObjectKey(object) {
-  for (var key in object) {
-    if (object.hasOwnProperty(key)) {
-      return key;
-    }
   }
 }
 

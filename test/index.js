@@ -99,6 +99,13 @@ describe('remove', () => {
     assert.deepEqual(trie.data, {});
   });
 
+  it('removes a string from trie', () => {
+    const trie = tried(['foo', 'bar']);
+    trie.remove('bar');
+    assert.ok(trie.contains('foo'));
+    assert.ok(!trie.contains('bar'));
+  });
+
   it('does not remove if string not found', () => {
     const trie = tried('a');
     trie.remove('aa');
