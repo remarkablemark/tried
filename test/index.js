@@ -1,6 +1,7 @@
 const assert = require('assert');
 const tried = require('..');
-const { data, invalid, KEY, VALUE } = require('./data');
+const { END_KEY: KEY, END_VALUE: VALUE } = require('../lib/constants');
+const { data, invalid } = require('./data');
 
 describe('tried', () => {
   it('does not set data for invalid arguments', () => {

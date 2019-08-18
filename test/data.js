@@ -1,5 +1,4 @@
-const KEY = '$$'; // end of word key
-const VALUE = 1; // end of word value
+const { END_KEY: KEY, END_VALUE: VALUE } = require('../lib/constants');
 
 const data = [
   /**
@@ -93,7 +92,5 @@ const invalid = [undefined, null, 0, 1, {}, [], () => {}, new Date()];
 
 module.exports = {
   data,
-  invalid,
-  KEY,
-  VALUE
+  invalid
 };
