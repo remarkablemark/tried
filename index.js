@@ -1,5 +1,7 @@
-var contains = require('./lib/contains');
 var constants = require('./lib/constants');
+var contains = require('./lib/contains');
+var get = require('./lib/get');
+
 var END_KEY = constants.END_KEY;
 var END_VALUE = constants.END_VALUE;
 
@@ -35,30 +37,13 @@ Trie.prototype.add = function(strings) {
 };
 
 /**
- * Gets value of string in trie.
+ * Gets end of string value from trie.
  *
  * @param {String} string
  * @return {*}
  */
 Trie.prototype.get = function(string) {
-  if (!string || typeof string !== 'string') {
-    return;
-  }
-
-  var letters = string.split('');
-  var node = this.data;
-
-  for (var i = 0, len = letters.length, lastIndex = len - 1; i < len; i++) {
-    var key = letters[i];
-    if (!node.hasOwnProperty(key)) {
-      return;
-    }
-
-    node = node[key];
-    if (lastIndex === i && node.hasOwnProperty(END_KEY)) {
-      return node[END_KEY];
-    }
-  }
+  return get(string, this.data);
 };
 
 /**
