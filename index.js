@@ -1,10 +1,10 @@
+var add = require('./lib/add');
 var constants = require('./lib/constants');
 var contains = require('./lib/contains');
 var get = require('./lib/get');
 var utilities = require('./lib/utilities');
 
 var END_KEY = constants.END_KEY;
-var END_VALUE = constants.END_VALUE;
 var isObjectEmpty = utilities.isObjectEmpty;
 
 /**
@@ -57,46 +57,10 @@ Trie.prototype.get = function(string) {
 function addStringsToTrie(strings, trie) {
   if (strings instanceof Array && strings.length) {
     for (var i = 0, stringsLength = strings.length; i < stringsLength; i++) {
-      addStringToTrie(strings[i], trie);
+      add(strings[i], trie);
     }
   } else {
-    addStringToTrie(strings, trie);
-  }
-}
-
-/**
- * Adds string to trie via object mutation.
- *
- * @param {String} string
- * @param {Object} trie
- */
-function addStringToTrie(string, trie) {
-  if (!string || typeof string !== 'string') {
-    return;
-  }
-
-  var node = trie;
-  var letters = string.split('');
-
-  for (
-    var i = 0,
-      lettersLength = letters.length,
-      lettersLastIndex = lettersLength - 1;
-    i < lettersLength;
-    i++
-  ) {
-    var letter = letters[i];
-
-    // use node with key if it exists; otherwise, create empty node
-    node[letter] = node[letter] || {};
-
-    // update current node
-    node = node[letter];
-
-    // last node of current string
-    if (lettersLastIndex === i) {
-      node[END_KEY] = END_VALUE;
-    }
+    add(strings, trie);
   }
 }
 
