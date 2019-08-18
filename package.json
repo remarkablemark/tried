@@ -30,7 +30,6 @@
     "prefix tree",
     "search tree"
   ],
-  "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
@@ -44,6 +43,8 @@
     "prettier": "^1.18.2",
     "standard-version": "^6.0.1"
   },
-  "files": [],
+  "files": [
+    "/lib"
+  ],
   "license": "MIT"
 }
