@@ -1,11 +1,6 @@
-/**
- * The end of word flag or marker.
- *
- * The key being a string with a length of 2 helps ensure uniqueness.
- * The value being a number helps differentiate against a string, keeps the data size small, and holds a truthy value.
- */
-var END_OF_WORD_KEY = '$$';
-var END_OF_WORD_VALUE = 1;
+var constants = require('./lib/constants');
+var END_KEY = constants.END_KEY;
+var END_VALUE = constants.END_VALUE;
 
 /**
  * Represents a trie.
@@ -39,7 +34,7 @@ Trie.prototype.contains = function(string) {
 
     node = node[key];
     if (lastIndex === i) {
-      return node.hasOwnProperty(END_OF_WORD_KEY);
+      return node.hasOwnProperty(END_KEY);
     }
   }
 };
@@ -76,8 +71,8 @@ Trie.prototype.get = function(string) {
     }
 
     node = node[key];
-    if (lastIndex === i && node.hasOwnProperty(END_OF_WORD_KEY)) {
-      return node[END_OF_WORD_KEY];
+    if (lastIndex === i && node.hasOwnProperty(END_KEY)) {
+      return node[END_KEY];
     }
   }
 };
@@ -129,7 +124,7 @@ function addStringToTrie(string, trie) {
 
     // last node of current string
     if (lettersLastIndex === i) {
-      node[END_OF_WORD_KEY] = END_OF_WORD_VALUE;
+      node[END_KEY] = END_VALUE;
     }
   }
 }
@@ -183,8 +178,8 @@ function removeStringFromTrie(string, trie) {
     }
 
     node = node[key];
-    if (lastIndex === i && node.hasOwnProperty(END_OF_WORD_KEY)) {
-      delete node[END_OF_WORD_KEY];
+    if (lastIndex === i && node.hasOwnProperty(END_KEY)) {
+      delete node[END_KEY];
 
       // clean up empty nodes like `{ a: {} }`
       while (isObjectEmpty(node)) {
