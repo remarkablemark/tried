@@ -1,3 +1,4 @@
+var contains = require('./lib/contains');
 var constants = require('./lib/constants');
 var END_KEY = constants.END_KEY;
 var END_VALUE = constants.END_VALUE;
@@ -13,30 +14,13 @@ function Trie(strings) {
 }
 
 /**
- * Checks if the trie contains a string.
+ * Checks if trie contains a string.
  *
- * @param {String} [string]
+ * @param {String} string
  * @return {Boolean}
  */
 Trie.prototype.contains = function(string) {
-  if (!string || typeof string !== 'string') {
-    return false;
-  }
-
-  var letters = string.split('');
-  var node = this.data;
-
-  for (var i = 0, len = letters.length, lastIndex = len - 1; i < len; i++) {
-    var key = letters[i];
-    if (!node.hasOwnProperty(key)) {
-      return false;
-    }
-
-    node = node[key];
-    if (lastIndex === i) {
-      return node.hasOwnProperty(END_KEY);
-    }
-  }
+  return contains(string, this.data);
 };
 
 /**
