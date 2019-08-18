@@ -1,9 +1,11 @@
 var constants = require('./lib/constants');
 var contains = require('./lib/contains');
 var get = require('./lib/get');
+var utilities = require('./lib/utilities');
 
 var END_KEY = constants.END_KEY;
 var END_VALUE = constants.END_VALUE;
+var isObjectEmpty = utilities.isObjectEmpty;
 
 /**
  * Represents a trie.
@@ -166,21 +168,6 @@ function removeStringFromTrie(string, trie) {
     // keep track of traversed nodes
     nodes.push(node);
   }
-}
-
-/**
- * Checks if object is empty.
- *
- * @param {Object} object
- * @return {Boolean}
- */
-function isObjectEmpty(object) {
-  for (var key in object) {
-    if (object.hasOwnProperty(key)) {
-      return false;
-    }
-  }
-  return true;
 }
 
 /**
