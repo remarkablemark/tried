@@ -1,11 +1,7 @@
 var add = require('./lib/add');
-var constants = require('./lib/constants');
 var contains = require('./lib/contains');
 var get = require('./lib/get');
-var utilities = require('./lib/utilities');
-
-var END_KEY = constants.END_KEY;
-var isObjectEmpty = utilities.isObjectEmpty;
+var remove = require('./lib/remove');
 
 /**
  * Represents a trie.
@@ -84,53 +80,10 @@ Trie.prototype.remove = function(strings) {
 function removeStringsFromTrie(strings, trie) {
   if (strings instanceof Array && strings.length) {
     for (var i = 0, stringsLength = strings.length; i < stringsLength; i++) {
-      removeStringFromTrie(strings[i], trie);
+      remove(strings[i], trie);
     }
   } else {
-    removeStringFromTrie(strings, trie);
-  }
-}
-
-/**
- * Removes string from the trie.
- *
- * @param {String} string
- * @param {Object} trie
- */
-function removeStringFromTrie(string, trie) {
-  if (!string || typeof string !== 'string') {
-    return;
-  }
-
-  var letters = string.split('');
-  var node = trie;
-  var nodes = [node];
-
-  for (var i = 0, len = letters.length, lastIndex = len - 1; i < len; i++) {
-    var key = letters[i];
-    if (!node.hasOwnProperty(key)) {
-      return;
-    }
-
-    node = node[key];
-    if (lastIndex === i && node.hasOwnProperty(END_KEY)) {
-      delete node[END_KEY];
-
-      // clean up empty nodes like `{ a: {} }`
-      while (isObjectEmpty(node)) {
-        if (nodes.length) {
-          // parent node
-          node = nodes.pop();
-          // delete empty property
-          delete node[letters[nodes.length]];
-        } else {
-          break;
-        }
-      }
-    }
-
-    // keep track of traversed nodes
-    nodes.push(node);
+    remove(strings, trie);
   }
 }
 
