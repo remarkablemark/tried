@@ -2,6 +2,9 @@ var add = require('./lib/add');
 var contains = require('./lib/contains');
 var get = require('./lib/get');
 var remove = require('./lib/remove');
+var utilities = require('./lib/utilities');
+
+var invoke = utilities.invoke;
 
 /**
  * Represents a trie.
@@ -10,7 +13,7 @@ var remove = require('./lib/remove');
  * @param {Array|String} [strings]
  */
 function Trie(strings) {
-  addStringsToTrie(strings, (this.data = {}));
+  invoke(add, strings, (this.data = {}));
 }
 
 /**
@@ -24,13 +27,13 @@ Trie.prototype.contains = function(string) {
 };
 
 /**
- * Adds string(s) to the trie.
+ * Adds string(s) to trie.
  *
- * @param {Array|String} [strings]
+ * @param {String[]|String} [strings]
  * @return {this}
  */
 Trie.prototype.add = function(strings) {
-  addStringsToTrie(strings, this.data);
+  invoke(add, strings, this.data);
   return this;
 };
 
@@ -45,47 +48,15 @@ Trie.prototype.get = function(string) {
 };
 
 /**
- * Adds string(s) to the trie.
+ * Removes string(s) from trie.
  *
- * @param {Array|String} [strings]
- * @param {Object} trie
- */
-function addStringsToTrie(strings, trie) {
-  if (strings instanceof Array && strings.length) {
-    for (var i = 0, stringsLength = strings.length; i < stringsLength; i++) {
-      add(strings[i], trie);
-    }
-  } else {
-    add(strings, trie);
-  }
-}
-
-/**
- * Removes string(s) from the trie.
- *
- * @param {Array|String} [strings]
+ * @param {String[]|String} [strings]
  * @return {this}
  */
 Trie.prototype.remove = function(strings) {
-  removeStringsFromTrie(strings, this.data);
+  invoke(remove, strings, this.data);
   return this;
 };
-
-/**
- * Removes string(s) from the trie.
- *
- * @param {Array|String} [strings]
- * @param {Object} trie
- */
-function removeStringsFromTrie(strings, trie) {
-  if (strings instanceof Array && strings.length) {
-    for (var i = 0, stringsLength = strings.length; i < stringsLength; i++) {
-      remove(strings[i], trie);
-    }
-  } else {
-    remove(strings, trie);
-  }
-}
 
 /**
  * Instantiates a trie (with optional strings).
