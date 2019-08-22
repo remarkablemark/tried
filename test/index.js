@@ -73,7 +73,7 @@ describe('add', () => {
   // test chainable method
   it('returns instance', () => {
     const trie = tried();
-    assert.equal(trie.remove(), trie);
+    assert.equal(trie.add(), trie);
   });
 
   data.forEach(testCase => {
