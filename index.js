@@ -3,15 +3,11 @@ var Trie = require('./lib/trie');
 /**
  * Instantiates a trie.
  *
- * @param {...string}
+ * @param {Object} [options]
  * @return {Trie}
  */
-function tried() {
-  var trie = new Trie();
-  if (arguments.length) {
-    trie.add.apply(trie, arguments);
-  }
-  return trie;
+function tried(options) {
+  return new Trie(options);
 }
 
 module.exports = tried;

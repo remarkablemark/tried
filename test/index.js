@@ -1,21 +1,38 @@
 const assert = require('assert');
 const tried = require('..');
+const Trie = require('../lib/trie');
 const { END_KEY: KEY, END_VALUE: VALUE } = require('../lib/constants');
 const { data, invalid } = require('./data');
 
 describe('tried', () => {
-  it('does not set data for invalid arguments', () => {
-    invalid.forEach(arg => {
-      assert.deepEqual(tried(arg).data, {});
+  it('returns Trie instance', () => {
+    assert.strictEqual(tried().constructor, Trie);
+  });
+
+  it('sets default options', () => {
+    assert.deepEqual(tried().options, {
+      endKey: KEY,
+      endValue: VALUE
     });
   });
 
-  data.forEach(testCase => {
-    const [args, expected] = testCase;
+  it('overrides default options', () => {
+    assert.deepEqual(tried({ endValue: true }).options, {
+      endKey: KEY,
+      endValue: true
+    });
+    assert.deepEqual(tried({ endKey: '$', endValue: '\n' }).options, {
+      endKey: '$',
+      endValue: '\n'
+    });
+  });
 
-    it(`sets data for ${JSON.stringify(args)}`, () => {
-      const trie = Array.isArray(args) ? tried.apply(null, args) : tried(args);
-      assert.deepEqual(trie.data, expected);
+  it('does not override default options if invalid', () => {
+    invalid.forEach(arg => {
+      assert.deepEqual(tried(arg).options, {
+        endKey: KEY,
+        endValue: VALUE
+      });
     });
   });
 });
@@ -76,9 +93,12 @@ describe('contains', () => {
     const [trieArgs, containsArgs, expected] = testCase;
 
     describe(`when trie contains ${JSON.stringify(trieArgs)}`, () => {
-      const trie = Array.isArray(trieArgs)
-        ? tried.apply(null, trieArgs)
-        : tried(trieArgs);
+      const trie = tried();
+      if (Array.isArray(trieArgs)) {
+        trie.add.apply(trie, trieArgs);
+      } else {
+        trie.add(trieArgs);
+      }
 
       it(`returns ${expected} for "${containsArgs}"`, () => {
         assert.strictEqual(trie.contains(containsArgs), expected);
@@ -105,9 +125,12 @@ describe('get', () => {
     const [trieArgs, containsArgs, expected] = testCase;
 
     describe(`when trie contains ${JSON.stringify(trieArgs)}`, () => {
-      const trie = Array.isArray(trieArgs)
-        ? tried.apply(null, trieArgs)
-        : tried(trieArgs);
+      const trie = tried();
+      if (Array.isArray(trieArgs)) {
+        trie.add.apply(trie, trieArgs);
+      } else {
+        trie.add(trieArgs);
+      }
 
       it(`returns ${expected} for "${containsArgs}"`, () => {
         assert.strictEqual(trie.get(containsArgs), expected);
@@ -125,27 +148,31 @@ describe('remove', () => {
 
   it('does not remove if argument is invalid', () => {
     const [arg, expected] = data[0];
-    const trie = tried(arg);
+    const trie = tried();
+    trie.add(arg);
     trie.remove('');
     invalid.forEach(arg => trie.remove(arg));
     assert.deepEqual(trie.data, expected);
   });
 
   it('removes all strings from trie', () => {
-    const trie = tried('a');
+    const trie = tried();
+    trie.add('a');
     trie.remove('a');
     assert.deepEqual(trie.data, {});
   });
 
   it('removes a string from trie', () => {
-    const trie = tried('foo', 'bar');
+    const trie = tried();
+    trie.add('foo', 'bar');
     trie.remove('bar');
     assert.strictEqual(trie.contains('foo'), true);
     assert.strictEqual(trie.contains('bar'), false);
   });
 
   it('removes multiple strings from trie', () => {
-    const trie = tried('foo', 'bar', 'baz', 'qux');
+    const trie = tried();
+    trie.add('foo', 'bar', 'baz', 'qux');
     trie.remove('bar', 'qux');
     assert.strictEqual(trie.contains('foo'), true);
     assert.strictEqual(trie.contains('bar'), false);
@@ -154,19 +181,22 @@ describe('remove', () => {
   });
 
   it('does not remove if string not found', () => {
-    const trie = tried('a');
+    const trie = tried();
+    trie.add('a');
     trie.remove('aa');
     assert.strictEqual(trie.contains('a'), true);
   });
 
   it('removes {"a":"b"} from trie', () => {
-    const trie = tried({ a: 'b' });
+    const trie = tried();
+    trie.add({ a: 'b' });
     trie.remove('a');
     assert.deepEqual(trie.data, {});
   });
 
   describe('when trie contains "a" and "ab"', () => {
-    const trie = tried('a', 'ab');
+    const trie = tried();
+    trie.add('a', 'ab');
     const expected = {
       a: {
         [KEY]: VALUE,
