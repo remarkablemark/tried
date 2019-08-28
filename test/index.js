@@ -14,7 +14,8 @@ describe('tried', () => {
     const [args, expected] = testCase;
 
     it(`sets data for ${JSON.stringify(args)}`, () => {
-      assert.deepEqual(tried(args).data, expected);
+      const trie = Array.isArray(args) ? tried.apply(null, args) : tried(args);
+      assert.deepEqual(trie.data, expected);
     });
   });
 });
@@ -37,8 +38,12 @@ describe('contains', () => {
     const [trieArgs, containsArgs, expected] = testCase;
 
     describe(`when trie contains ${JSON.stringify(trieArgs)}`, () => {
+      const trie = Array.isArray(trieArgs)
+        ? tried.apply(null, trieArgs)
+        : tried(trieArgs);
+
       it(`returns ${expected} for "${containsArgs}"`, () => {
-        assert.strictEqual(tried(trieArgs).contains(containsArgs), expected);
+        assert.strictEqual(trie.contains(containsArgs), expected);
       });
     });
   });
@@ -62,8 +67,12 @@ describe('get', () => {
     const [trieArgs, containsArgs, expected] = testCase;
 
     describe(`when trie contains ${JSON.stringify(trieArgs)}`, () => {
+      const trie = Array.isArray(trieArgs)
+        ? tried.apply(null, trieArgs)
+        : tried(trieArgs);
+
       it(`returns ${expected} for "${containsArgs}"`, () => {
-        assert.strictEqual(tried(trieArgs).get(containsArgs), expected);
+        assert.strictEqual(trie.get(containsArgs), expected);
       });
     });
   });
@@ -81,7 +90,11 @@ describe('add', () => {
 
     it(`adds ${JSON.stringify(args)} to trie`, () => {
       const trie = tried();
-      trie.add(args);
+      if (Array.isArray(args)) {
+        trie.add.apply(trie, args);
+      } else {
+        trie.add(args);
+      }
       assert.deepEqual(trie.data, expected);
     });
   });
@@ -101,15 +114,15 @@ describe('remove', () => {
   });
 
   it('removes a string from trie', () => {
-    const trie = tried(['foo', 'bar']);
+    const trie = tried('foo', 'bar');
     trie.remove('bar');
     assert.ok(trie.contains('foo'));
     assert.ok(!trie.contains('bar'));
   });
 
   it('removes multiple strings from trie', () => {
-    const trie = tried(['foo', 'bar', 'baz', 'qux']);
-    trie.remove(['bar', 'qux']);
+    const trie = tried('foo', 'bar', 'baz', 'qux');
+    trie.remove('bar', 'qux');
     assert.ok(trie.contains('foo'));
     assert.ok(!trie.contains('bar'));
     assert.ok(trie.contains('baz'));
@@ -124,7 +137,7 @@ describe('remove', () => {
 
   describe('when trie contains "a" and "ab"', () => {
     it('contains only "ab" when "a" is removed', () => {
-      const trie = tried(['a', 'ab']);
+      const trie = tried('a', 'ab');
       const expected = {
         a: {
           [KEY]: VALUE,
