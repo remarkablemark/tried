@@ -44,6 +44,14 @@ describe('add', () => {
     assert.equal(trie.add(), trie);
   });
 
+  it('adds "a" with custom end key and value to trie', () => {
+    const endKey = 'END_KEY';
+    const endValue = 'END_VALUE';
+    const trie = tried({ endKey, endValue });
+    trie.add('a');
+    assert.deepEqual(trie.data, { a: { [endKey]: endValue } });
+  });
+
   data.forEach(testCase => {
     const [args, expected] = testCase;
 
@@ -144,6 +152,13 @@ describe('remove', () => {
   it('returns instance', () => {
     const trie = tried();
     assert.equal(trie.remove(), trie);
+  });
+
+  it('removes string with custom end key from trie', () => {
+    const trie = tried({ endKey: 1, endValue: 2 });
+    trie.add('a');
+    trie.remove('a');
+    assert.deepEqual(trie.data, {});
   });
 
   it('does not remove if argument is invalid', () => {
