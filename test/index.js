@@ -85,9 +85,19 @@ describe('add', () => {
 
 describe('contains', () => {
   it('returns false for invalid arguments', () => {
+    const trie = tried();
     invalid.forEach(arg => {
-      assert.strictEqual(tried().contains(arg), false);
+      assert.strictEqual(trie.contains(arg), false);
     });
+  });
+
+  it('works when string has custom end key and value', () => {
+    const endKey = 'END_KEY';
+    const endValue = 'END_VALUE';
+    const trie = tried({ endKey, endValue });
+    trie.add('a', 'ab');
+    assert.strictEqual(trie.contains('ab'), true);
+    assert.strictEqual(trie.contains('abc'), false);
   });
 
   [
@@ -120,6 +130,14 @@ describe('get', () => {
     invalid.forEach(arg => {
       assert.strictEqual(tried().get(arg), undefined);
     });
+  });
+
+  it('works when string has custom end key and value', () => {
+    const endKey = 'END_KEY';
+    const endValue = 'END_VALUE';
+    const trie = tried({ endKey, endValue });
+    trie.add('a');
+    assert.strictEqual(trie.get('a'), endValue);
   });
 
   [
