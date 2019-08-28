@@ -20,6 +20,28 @@ describe('tried', () => {
   });
 });
 
+describe('add', () => {
+  // test chainable method
+  it('returns instance', () => {
+    const trie = tried();
+    assert.equal(trie.add(), trie);
+  });
+
+  data.forEach(testCase => {
+    const [args, expected] = testCase;
+
+    it(`adds ${JSON.stringify(args)} to trie`, () => {
+      const trie = tried();
+      if (Array.isArray(args)) {
+        trie.add.apply(trie, args);
+      } else {
+        trie.add(args);
+      }
+      assert.deepEqual(trie.data, expected);
+    });
+  });
+});
+
 describe('contains', () => {
   it('returns false for invalid arguments', () => {
     invalid.forEach(arg => {
@@ -74,28 +96,6 @@ describe('get', () => {
       it(`returns ${expected} for "${containsArgs}"`, () => {
         assert.strictEqual(trie.get(containsArgs), expected);
       });
-    });
-  });
-});
-
-describe('add', () => {
-  // test chainable method
-  it('returns instance', () => {
-    const trie = tried();
-    assert.equal(trie.add(), trie);
-  });
-
-  data.forEach(testCase => {
-    const [args, expected] = testCase;
-
-    it(`adds ${JSON.stringify(args)} to trie`, () => {
-      const trie = tried();
-      if (Array.isArray(args)) {
-        trie.add.apply(trie, args);
-      } else {
-        trie.add(args);
-      }
-      assert.deepEqual(trie.data, expected);
     });
   });
 });
