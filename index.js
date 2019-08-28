@@ -3,7 +3,7 @@ var Trie = require('./lib/trie');
 /**
  * Instantiates a trie.
  *
- * @param {...String}
+ * @param {...string}
  * @return {Trie}
  */
 function tried() {
