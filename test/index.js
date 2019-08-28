@@ -107,7 +107,15 @@ describe('remove', () => {
     assert.equal(trie.remove(), trie);
   });
 
-  it('removes single string from trie', () => {
+  it('does not remove if argument is invalid', () => {
+    const [arg, expected] = data[0];
+    const trie = tried(arg);
+    trie.remove('');
+    invalid.forEach(arg => trie.remove(arg));
+    assert.deepEqual(trie.data, expected);
+  });
+
+  it('removes all strings from trie', () => {
     const trie = tried('a');
     trie.remove('a');
     assert.deepEqual(trie.data, {});
