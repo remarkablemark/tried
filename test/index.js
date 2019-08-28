@@ -116,23 +116,23 @@ describe('remove', () => {
   it('removes a string from trie', () => {
     const trie = tried('foo', 'bar');
     trie.remove('bar');
-    assert.ok(trie.contains('foo'));
-    assert.ok(!trie.contains('bar'));
+    assert.strictEqual(trie.contains('foo'), true);
+    assert.strictEqual(trie.contains('bar'), false);
   });
 
   it('removes multiple strings from trie', () => {
     const trie = tried('foo', 'bar', 'baz', 'qux');
     trie.remove('bar', 'qux');
-    assert.ok(trie.contains('foo'));
-    assert.ok(!trie.contains('bar'));
-    assert.ok(trie.contains('baz'));
-    assert.ok(!trie.contains('qux'));
+    assert.strictEqual(trie.contains('foo'), true);
+    assert.strictEqual(trie.contains('bar'), false);
+    assert.strictEqual(trie.contains('baz'), true);
+    assert.strictEqual(trie.contains('qux'), false);
   });
 
   it('does not remove if string not found', () => {
     const trie = tried('a');
     trie.remove('aa');
-    assert.ok(trie.contains('a'));
+    assert.strictEqual(trie.contains('a'), true);
   });
 
   describe('when trie contains "a" and "ab"', () => {
