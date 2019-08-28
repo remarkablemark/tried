@@ -30,6 +30,14 @@ describe('utilities', () => {
         });
       });
 
+      it('does not copy properties if source is not an object', () => {
+        const target = 1;
+        const expected = target;
+        [undefined, null, '', 0, new Date()].forEach(source => {
+          assert.strictEqual(utilities.assign(target, source), expected);
+        });
+      });
+
       it('copies properties from source object to target object', () => {
         const target = { a: 1, b: 2 };
         const source = { b: 4, c: 5 };
