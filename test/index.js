@@ -40,6 +40,22 @@ describe('add', () => {
       assert.deepEqual(trie.data, expected);
     });
   });
+
+  describe('when string has custom value', () => {
+    it('adds {"a":"b","c":"d"} to trie', () => {
+      const trie = tried();
+      trie.add({ a: 'b', c: 'd' });
+      assert.deepEqual(trie.data, { a: { [KEY]: 'b' }, c: { [KEY]: 'd' } });
+    });
+
+    it('allows anything to be set as the value', () => {
+      const trie = tried();
+      invalid.forEach(arg => {
+        trie.add({ a: arg });
+        assert.deepEqual(trie.data, { a: { [KEY]: arg } });
+      });
+    });
+  });
 });
 
 describe('contains', () => {
@@ -143,17 +159,24 @@ describe('remove', () => {
     assert.strictEqual(trie.contains('a'), true);
   });
 
+  it('removes {"a":"b"} from trie', () => {
+    const trie = tried({ a: 'b' });
+    trie.remove('a');
+    assert.deepEqual(trie.data, {});
+  });
+
   describe('when trie contains "a" and "ab"', () => {
-    it('contains only "ab" when "a" is removed', () => {
-      const trie = tried('a', 'ab');
-      const expected = {
-        a: {
-          [KEY]: VALUE,
-          b: {
-            [KEY]: VALUE
-          }
+    const trie = tried('a', 'ab');
+    const expected = {
+      a: {
+        [KEY]: VALUE,
+        b: {
+          [KEY]: VALUE
         }
-      };
+      }
+    };
+
+    it('contains only "ab" when "a" is removed', () => {
       assert.deepEqual(trie.data, expected);
       trie.remove('a');
       delete expected.a[KEY];
