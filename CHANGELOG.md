@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/remarkablemark/trieste/compare/v0.1.0...v0.2.0) (2019-08-30)
+
+
+### Features
+
+* rename package name from `tried` to `trieste` ([c612f2d](https://github.com/remarkablemark/trieste/commit/c612f2d))
+
+
+
 ## 0.1.0 (2019-08-30)
 
 
