@@ -8,8 +8,8 @@ var Trie = require('./lib/trie');
  * @param {number} [options.endValue=1]
  * @return {Trie}
  */
-function tried(options) {
+function trieste(options) {
   return new Trie(options);
 }
 
-module.exports = tried;
+module.exports = trieste;

@@ -1,13 +1,13 @@
 {
-  "name": "tried",
+  "name": "trieste",
   "version": "0.1.0",
   "description": "Trie generator.",
   "author": "Mark <mark@remarkablemark.org>",
   "main": "index.js",
   "scripts": {
     "build": "npm run clean && npm run build:unmin && npm run build:min",
-    "build:min": "uglifyjs dist/tried.js --output dist/tried.min.js --compress --mangle --source-map url=tried.min.js.map,includeSources",
-    "build:unmin": "rollup --config --file dist/tried.js",
+    "build:min": "uglifyjs dist/trieste.js --output dist/trieste.min.js --compress --mangle --source-map url=trieste.min.js.map,includeSources",
+    "build:unmin": "rollup --config --file dist/trieste.js",
     "clean": "rimraf dist",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint --ignore-path .gitignore .",
@@ -21,13 +21,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/remarkablemark/tried"
+    "url": "https://github.com/remarkablemark/trieste"
   },
   "bugs": {
-    "url": "https://github.com/remarkablemark/tried/issues"
+    "url": "https://github.com/remarkablemark/trieste/issues"
   },
   "keywords": [
-    "tried",
+    "trieste",
     "trie",
     "data structure",
     "digital tree",

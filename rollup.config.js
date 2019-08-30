@@ -4,7 +4,7 @@ const config = {
   input: 'index.js',
   output: {
     format: 'umd',
-    name: 'tried'
+    name: 'trieste'
   },
   plugins: [commonjs()]
 };

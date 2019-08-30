@@ -1,31 +1,31 @@
-# tried
+# trieste
 
-[![NPM](https://nodei.co/npm/tried.png)](https://nodei.co/npm/tried/)
+[![NPM](https://nodei.co/npm/trieste.png)](https://nodei.co/npm/trieste/)
 
-[![NPM version](https://img.shields.io/npm/v/tried.svg)](https://www.npmjs.com/package/tried)
-[![Build Status](https://travis-ci.org/remarkablemark/tried.svg?branch=master)](https://travis-ci.org/remarkablemark/tried)
-[![Coverage Status](https://coveralls.io/repos/github/remarkablemark/tried/badge.svg?branch=master)](https://coveralls.io/github/remarkablemark/tried?branch=master)
+[![NPM version](https://img.shields.io/npm/v/trieste.svg)](https://www.npmjs.com/package/trieste)
+[![Build Status](https://travis-ci.org/remarkablemark/trieste.svg?branch=master)](https://travis-ci.org/remarkablemark/trieste)
+[![Coverage Status](https://coveralls.io/repos/github/remarkablemark/trieste/badge.svg?branch=master)](https://coveralls.io/github/remarkablemark/trieste?branch=master)
 
 [Trie](https://wikipedia.org/wiki/Trie) generator.
 
 ## Installation
 
-[NPM](https://www.npmjs.com/package/tried):
+[NPM](https://www.npmjs.com/package/trieste):
 
 ```sh
-$ npm install tried --save
+$ npm install trieste --save
 ```
 
-[Yarn](https://yarnpkg.com/package/tried):
+[Yarn](https://yarnpkg.com/package/trieste):
 
 ```sh
-$ yarn add tried
+$ yarn add trieste
 ```
 
-[CDN](https://unpkg.com/tried/):
+[CDN](https://unpkg.com/trieste/):
 
 ```html
-<script src="https://unpkg.com/tried@latest/dist/tried.min.js"></script>
+<script src="https://unpkg.com/trieste@latest/dist/trieste.min.js"></script>
 ```
 
 ## Usage
@@ -36,10 +36,10 @@ Import the module:
 
 ```js
 // CommonJS
-const tried = require('tried');
+const trieste = require('trieste');
 
 // ES Modules
-import tried from 'tried';
+import trieste from 'trieste';
 ```
 
 ### Trie
@@ -47,32 +47,32 @@ import tried from 'tried';
 Create a trie instance:
 
 ```js
-const trie = tried();
+const trie = trieste();
 ```
 
-Alternatively, this can be done by instantiating the constructor:
+This can also be done by instantiating the constructor:
 
 ```js
-const Trie = require('tried/lib/trie');
+const Trie = require('trieste/lib/trie');
 const trie = new Trie();
 ```
 
 #### Options
 
-You can set options for each instance:
+Options can be set for each instance:
 
 ```js
 const options = {
   endKey: 'END_OF_STRING_KEY',
   endValue: 'END_OF_STRING_VALUE'
 };
-const trie = tried(options);
+const trie = trieste(options);
 ```
 
-Alternatively, this can be done using the constructor:
+This can also be achieved with the constructor:
 
 ```js
-const Trie = require('tried/lib/trie');
+const Trie = require('trieste/lib/trie');
 
 const trie = new Trie({
   endKey: 'END_OF_STRING_KEY',
@@ -111,7 +111,7 @@ Data is a POJO (Plain Old JavaScript Object), which means it can be converted to
 JSON.stringify(trie.data);
 ```
 
-As an example, the following is the output of `tried().add('a').data`:
+As an example, the following is the output of `trieste().add('a').data`:
 
 ```js
 { a: { '$$': 1 } }
@@ -190,7 +190,7 @@ trie.add({ foo: 'bar' }).get('foo'); // 'bar'
 The value can also be set in [options](#options):
 
 ```js
-const trie = tried({ endValue: null });
+const trie = trieste({ endValue: null });
 trie.add('foo').get('foo'); // null
 ```
 
@@ -274,4 +274,4 @@ $ git push --follow-tags && npm publish
 
 ## License
 
-[MIT](https://github.com/remarkablemark/tried/blob/master/LICENSE)
+[MIT](https://github.com/remarkablemark/trieste/blob/master/LICENSE)

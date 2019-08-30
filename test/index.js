@@ -1,27 +1,27 @@
 const assert = require('assert');
-const tried = require('..');
+const trieste = require('..');
 const Trie = require('../lib/trie');
 const { END_KEY: KEY, END_VALUE: VALUE } = require('../lib/constants');
 const { data, invalid } = require('./data');
 
-describe('tried', () => {
+describe('trieste', () => {
   it('returns Trie instance', () => {
-    assert.strictEqual(tried().constructor, Trie);
+    assert.strictEqual(trieste().constructor, Trie);
   });
 
   it('sets default options', () => {
-    assert.deepEqual(tried().options, {
+    assert.deepEqual(trieste().options, {
       endKey: KEY,
       endValue: VALUE
     });
   });
 
   it('overrides default options', () => {
-    assert.deepEqual(tried({ endValue: true }).options, {
+    assert.deepEqual(trieste({ endValue: true }).options, {
       endKey: KEY,
       endValue: true
     });
-    assert.deepEqual(tried({ endKey: '$', endValue: '\n' }).options, {
+    assert.deepEqual(trieste({ endKey: '$', endValue: '\n' }).options, {
       endKey: '$',
       endValue: '\n'
     });
@@ -29,7 +29,7 @@ describe('tried', () => {
 
   it('does not override default options if invalid', () => {
     invalid.forEach(arg => {
-      assert.deepEqual(tried(arg).options, {
+      assert.deepEqual(trieste(arg).options, {
         endKey: KEY,
         endValue: VALUE
       });
@@ -40,14 +40,14 @@ describe('tried', () => {
 describe('add', () => {
   // test chainable method
   it('returns instance', () => {
-    const trie = tried();
+    const trie = trieste();
     assert.equal(trie.add(), trie);
   });
 
   it('adds "a" with custom end key and value to trie', () => {
     const endKey = 'END_KEY';
     const endValue = 'END_VALUE';
-    const trie = tried({ endKey, endValue });
+    const trie = trieste({ endKey, endValue });
     trie.add('a');
     assert.deepEqual(trie.data, { a: { [endKey]: endValue } });
   });
@@ -56,7 +56,7 @@ describe('add', () => {
     const [args, expected] = testCase;
 
     it(`adds ${JSON.stringify(args)} to trie`, () => {
-      const trie = tried();
+      const trie = trieste();
       if (Array.isArray(args)) {
         trie.add.apply(trie, args);
       } else {
@@ -68,13 +68,13 @@ describe('add', () => {
 
   describe('when string has custom value', () => {
     it('adds {"a":"b","c":"d"} to trie', () => {
-      const trie = tried();
+      const trie = trieste();
       trie.add({ a: 'b', c: 'd' });
       assert.deepEqual(trie.data, { a: { [KEY]: 'b' }, c: { [KEY]: 'd' } });
     });
 
     it('allows anything to be set as the value', () => {
-      const trie = tried();
+      const trie = trieste();
       invalid.forEach(arg => {
         trie.add({ a: arg });
         assert.deepEqual(trie.data, { a: { [KEY]: arg } });
@@ -85,7 +85,7 @@ describe('add', () => {
 
 describe('contains', () => {
   it('returns false for invalid arguments', () => {
-    const trie = tried();
+    const trie = trieste();
     invalid.forEach(arg => {
       assert.strictEqual(trie.contains(arg), false);
     });
@@ -94,7 +94,7 @@ describe('contains', () => {
   it('works when string has custom end key and value', () => {
     const endKey = 'END_KEY';
     const endValue = 'END_VALUE';
-    const trie = tried({ endKey, endValue });
+    const trie = trieste({ endKey, endValue });
     trie.add('a', 'ab');
     assert.strictEqual(trie.contains('ab'), true);
     assert.strictEqual(trie.contains('abc'), false);
@@ -111,7 +111,7 @@ describe('contains', () => {
     const [trieArgs, containsArgs, expected] = testCase;
 
     describe(`when trie contains ${JSON.stringify(trieArgs)}`, () => {
-      const trie = tried();
+      const trie = trieste();
       if (Array.isArray(trieArgs)) {
         trie.add.apply(trie, trieArgs);
       } else {
@@ -128,14 +128,14 @@ describe('contains', () => {
 describe('get', () => {
   it('returns undefined for invalid arguments', () => {
     invalid.forEach(arg => {
-      assert.strictEqual(tried().get(arg), undefined);
+      assert.strictEqual(trieste().get(arg), undefined);
     });
   });
 
   it('works when string has custom end key and value', () => {
     const endKey = 'END_KEY';
     const endValue = 'END_VALUE';
-    const trie = tried({ endKey, endValue });
+    const trie = trieste({ endKey, endValue });
     trie.add('a');
     assert.strictEqual(trie.get('a'), endValue);
   });
@@ -151,7 +151,7 @@ describe('get', () => {
     const [trieArgs, containsArgs, expected] = testCase;
 
     describe(`when trie contains ${JSON.stringify(trieArgs)}`, () => {
-      const trie = tried();
+      const trie = trieste();
       if (Array.isArray(trieArgs)) {
         trie.add.apply(trie, trieArgs);
       } else {
@@ -168,12 +168,12 @@ describe('get', () => {
 describe('remove', () => {
   // test chainable method
   it('returns instance', () => {
-    const trie = tried();
+    const trie = trieste();
     assert.equal(trie.remove(), trie);
   });
 
   it('removes string with custom end key from trie', () => {
-    const trie = tried({ endKey: 1, endValue: 2 });
+    const trie = trieste({ endKey: 1, endValue: 2 });
     trie.add('a');
     trie.remove('a');
     assert.deepEqual(trie.data, {});
@@ -181,7 +181,7 @@ describe('remove', () => {
 
   it('does not remove if argument is invalid', () => {
     const [arg, expected] = data[0];
-    const trie = tried();
+    const trie = trieste();
     trie.add(arg);
     trie.remove('');
     invalid.forEach(arg => trie.remove(arg));
@@ -189,14 +189,14 @@ describe('remove', () => {
   });
 
   it('removes all strings from trie', () => {
-    const trie = tried();
+    const trie = trieste();
     trie.add('a');
     trie.remove('a');
     assert.deepEqual(trie.data, {});
   });
 
   it('removes a string from trie', () => {
-    const trie = tried();
+    const trie = trieste();
     trie.add('foo', 'bar');
     trie.remove('bar');
     assert.strictEqual(trie.contains('foo'), true);
@@ -204,7 +204,7 @@ describe('remove', () => {
   });
 
   it('removes multiple strings from trie', () => {
-    const trie = tried();
+    const trie = trieste();
     trie.add('foo', 'bar', 'baz', 'qux');
     trie.remove('bar', 'qux');
     assert.strictEqual(trie.contains('foo'), true);
@@ -214,21 +214,21 @@ describe('remove', () => {
   });
 
   it('does not remove if string not found', () => {
-    const trie = tried();
+    const trie = trieste();
     trie.add('a');
     trie.remove('aa');
     assert.strictEqual(trie.contains('a'), true);
   });
 
   it('removes {"a":"b"} from trie', () => {
-    const trie = tried();
+    const trie = trieste();
     trie.add({ a: 'b' });
     trie.remove('a');
     assert.deepEqual(trie.data, {});
   });
 
   describe('when trie contains "a" and "ab"', () => {
-    const trie = tried();
+    const trie = trieste();
     trie.add('a', 'ab');
     const expected = {
       a: {
