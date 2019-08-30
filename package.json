@@ -1,6 +1,6 @@
 {
   "name": "tried",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Trie generator.",
   "author": "Mark <mark@remarkablemark.org>",
   "main": "index.js",
