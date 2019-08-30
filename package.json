@@ -12,6 +12,7 @@
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:fix": "npm run lint -- --fix",
+    "prepublishOnly": "npm run lint && npm test && npm run build",
     "release": "standard-version --no-verify",
     "test": "mocha",
     "test:coverage": "nyc npm test",
