@@ -8,6 +8,8 @@
 
 [Trie](https://wikipedia.org/wiki/Trie) generator.
 
+[Repl.it](https://repl.it/@remarkablemark/trieste) | [JSFiddle](https://jsfiddle.net/remarkablemark/fjm2xyp0/) | [Examples](https://github.com/remarkablemark/trieste/tree/master/examples)
+
 ## Installation
 
 [NPM](https://www.npmjs.com/package/trieste):
